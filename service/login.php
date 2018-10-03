@@ -25,9 +25,11 @@
       file_put_contents('User_Data.json', $json_string);
     }
 
-    require("../mainpage.php");
+    require("../page/mainpage.html");
 
   }
+
+
 
 
   var_dump($data);

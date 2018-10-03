@@ -1,3 +1,6 @@
+<html>
+<body>
+  <button> gogogo </button>
 <?php
 
   $json_string = file_get_contents('User_Data.json');
@@ -21,8 +24,13 @@
       $json_string = json_encode($data);
       file_put_contents('User_Data.json', $json_string);
     }
+
+    require("../mainpage.php");
+
   }
 
 
   var_dump($data);
 ?>
+</body>
+</html>

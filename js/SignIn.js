@@ -6,6 +6,7 @@ $(function(){
     $('#login').css('display','none');
     $('#divSignup').css('display','none');
     $('#ModeSignIn').css('display','block');
+    $("#result").html("");
   });
 });
 
@@ -27,6 +28,9 @@ $(function(){
 				success:function(data){
 					switch(data){
 						case 1:
+              var str = "";
+              $('#tete').css('display','none');
+              $("#result").html(str);
               login(username);
 							break;
 						case 2:
@@ -34,7 +38,7 @@ $(function(){
               $("#result").html(str);
 							break;
 						case 3:
-              var str = "password fault！"
+              var str = "user not exist！"
               $("#result").html(str);
               break;
 					}
@@ -62,5 +66,6 @@ $(function(){
   $("#disconnect").click(function(){
     $('#divSign').css('display','block');
     $('#divId').css('display','none');
+    $('#tete').css('display','block');
   });
 });

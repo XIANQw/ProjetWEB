@@ -5,7 +5,7 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $sql = file_get_contents("UserJson.json");
 if($sql==null){
-  echo 3; // user not exist
+  //echo 3; // user not exist
 }
 else{
   $users = json_decode($sql,true);

@@ -39,5 +39,6 @@ $(function(){
     $('#signup').css('display','none');
     $('#divSignup').css('display','block');
     $('#ModeSignIn').css('display','none');
+    $("#result").html("");
   });
 });

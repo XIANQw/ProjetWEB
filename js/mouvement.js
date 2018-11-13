@@ -1,39 +1,53 @@
-var oriValuesX = []; //存放x轴数据
-var oriValuesY = []; //存放y轴数据
-var oriValuesZ = []; //存放z轴数据
-var oriValuesSqrt = []; //存放xyz平方相加再开根的数据
-var timeX = []; //存放图表x轴的时间，单位：毫秒
-var x = y = z = 0; //用以获取xyz轴当前的数据
-var startTime = new Date().getTime(); //最初的开始时间，单位：毫秒
-var string = ''; //定义一个字符串用来显示数据
+$(function(){
+ var oriValuesG = [];
+ var oriValuesB = [];
+ var oriValuesA = [];
+ var accX = [];
+ var accY = [];
+ var accZ = [];
+ var g=b=a=x=y=z=0;
+ var startTime = new Date().getTime();
+ var stringA = "Alpha:";
+ var stringB = "Beta:";
+ var stringG = "Gamma:";
+ var stringX = "X:";
+ var stringY = "Y:";
+ var stringZ = "Z:";
+   $("#start").click(function(){
+     window.addEventListener("deviceorientation", function(eventData) {
+       g = Math.round(eventData.gamma);
+       b = Math.round(eventData.beta);
+       a = Math.round(eventData.alpha);
+       oriValuesG.push(g);
+       oriValuesB.push(b);
+       oriValuesA.push(a);
+     });
+     window.addEventListener('devicemotion',function(event){
+       var acc = event.accelerationIncludingGravity;
+       x = Math.round(acc.x);
+       y = Math.round(acc.y);
+       z = Math.round(acc.z);
+       accX.push(x);
+       accY.push(y);
+       accZ.push(z);
+     });
+ })
+ $("#stop").click(function(){
+     //line();
+     for(var i= 0 ; i < oriValuesA.length ; i++){
+        stringA = stringA +" "+oriValuesA[i];
+        stringB = stringB +" "+oriValuesB[i];
+        stringG = stringG +" "+oriValuesG[i];
+        stringX = stringX +" "+accX[i];
+        stringY = stringY +" "+accY[i];
+        stringZ = stringZ +" "+accZ[i];
+     }
 
-window.addEventListener("load", function(eventData) {
-
-  var res = $(".res");
-
-  window.addEventListener("devicemotion", function(eventData) {
-    /*res[0].textContent = "x: "+ Math.round(ev.accelerationIncludingGravity.x);
-    res[1].textContent = "y: " + Math.round(ev.accelerationIncludingGravity.y);
-    res[2].textContent= "z: " + Math.round(ev.accelerationIncludingGravity.z);*/
-    var currTime = new Date().getTime(); //当前时间
-    var diffTime = currTime - startTime;//当前时间减最初时间，得到当前时间差
-    timeX.push(diffTime); //将当前时间差存放
-    var acceleration =eventData.accelerationIncludingGravity; //获得加速器对象
-    x = acceleration.x; //获取x轴当前加速度
-    y =acceleration.y; //获取y轴当前加速度
-    z =acceleration.z; //获取z轴当前加速度
-    oriValuesX.push(x); //将x轴当前加速度存放
-    oriValuesY.push(y); //将y轴当前加速度存放
-    oriValuesZ.push(z); //将z轴当前加速度存放
-    oriValuesSqrt.push(Math.round(Math.sqrt(x * x + y * y + z *z))); //将当前xyz加速度平方相加再开根存放
-    if(timeX.length == 200){ //控制个数
-        //line();//调用line函数，生成图表用的
-        for(var i= 0 ; i < oriValuesSqrt.length ; i++){
-           string = string +(timeX[i]+":"+ oriValuesSqrt[i]+ "\n"); //'当前时间：数据' 的形式显示在前台，方便查看数据
-        }
-       res[0].textContent = string;
-
-    }
-  });
-
+    $("#X").html(stringX);
+    $("#Y").html(stringY);
+    $("#Z").html(stringZ);
+    $("#A").html(stringA);
+    $("#B").html(stringB);
+    $("#G").html(stringG);
+  })
 })

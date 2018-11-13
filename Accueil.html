@@ -4,9 +4,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/SignUp.js"></script>
     <script src="js/SignIn.js"></script>
+    <script src="js/mouvement.js"></script>
   </head>
   <body>
-    <h2>
+    <h2 id="tete">
       Welcome
     </h2>
     <div id="divSign">
@@ -17,7 +18,6 @@
         <p><span>Password：</span><input id="user-password" type="password" name="password" /></p>
       </form>
       <button id="login">login</button>
-
       <button id="signup" style="display:none">Sign up </button>
       <div id="divSignup">
         <span>Have not yet username? click </span>
@@ -33,6 +33,19 @@
         <h4 id="nameOfUser"></h4>
       <button id ="disconnect">disconnect</button>
       </fieldset>
+      <p><span>keyword </span><input type="text" name="keyword" /></p>
+      <button id ="start">start</button>
+      <button id="stop"> stop</button>
+      <fieldset>
+        <legend >Result</legend>
+        <div id="X"></div>
+        <div id="Y"></div>
+        <div id="Z"></div>
+        <div id="A"></div>
+        <div id="B"></div>
+        <div id="G"></div>
+      </fieldset>
+
     </div>
     <div id="result"></div>
   </body>

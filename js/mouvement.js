@@ -1,50 +1,46 @@
 $(function(){
- var oriValuesG = [];
- var oriValuesB = [];
- var oriValuesA = [];
- var accX = [];
- var accY = [];
- var accZ = [];
- var g=b=a=x=y=z=0;
- var stringA = "Alpha:";
- var stringB = "Beta:";
- var stringG = "Gamma:";
- var stringX = "X:";
- var stringY = "Y:";
- var stringZ = "Z:";
+ var accelerations = [];
+ var orientaions=[];
+ var time_acc=[];
+ var time_ori=[];
  var startTime;
-   $("#start").click(function(){
-     startTime = new Date().getTime();
-     window.addEventListener("deviceorientation", function(eventData) {
-       g = Math.round(eventData.gamma);
-       b = Math.round(eventData.beta);
-       a = Math.round(eventData.alpha);
-       oriValuesG.push(g);
-       oriValuesB.push(b);
-       oriValuesA.push(a);
-     });
-     window.addEventListener("devicemotion",function(events){
-       var acc = events.accelerationIncludingGravity;
-       x = Math.round(acc.x);
-       y = Math.round(acc.y);
-       z = Math.round(acc.z);
-       accX.push(x);
-       accY.push(y);
-       accZ.push(z);
-     });
+
+ function orientaionsLisener(eventData){
+   var g = Math.round(eventData.gamma);
+   var b = Math.round(eventData.beta);
+   var a = Math.round(eventData.alpha);
+   orientaions.push(Math.round(Math.sqrt(g*g+b*b+a*a)));
+   time_ori.push(new Date().getTime()-startTime);
+   $("#G").html(g);
+   $("#B").html(b);
+   $("#A").html(a);
+ }
+
+ function accelerationLisener(events){
+   var acc = events.accelerationIncludingGravity;
+   var x = Math.round(acc.x);
+   var y = Math.round(acc.y);
+   var z = Math.round(acc.z);
+   $("#X").html(x);
+   $("#Y").html(y);
+   $("#Z").html(z);
+   accelerations.push(Math.round(Math.sqrt(x*x+y*y+z*z)));
+   time_acc.push(new Date().getTime()-startTime);
+ }
+
+ $("#start").click(function(){
+   startTime = new Date().getTime();
+   window.addEventListener("deviceorientation",orientaionsLisener);
+   window.addEventListener("devicemotion",accelerationLisener);
  })
+
+
  $("#stop").click(function(){
-   var currentTime = new Date().getTime();
-   var diff = currentTime - startTime;
-   var donnes = new Map();
-   donnes.set('accX',accX);
-   donnes.set('accY',accY);
-   donnes.set('accZ',accZ);
-   donnes.set('G',oriValuesG);
-   donnes.set('B',oriValuesB);
-   donnes.set('A',oriValuesA);
-   donnes.set('time',diff);
+   window.removeEventListener("deviceorientation",orientaionsLisener);
+   window.removeEventListener("devicemotion",accelerationLisener);
+   var donnes = [accelerations,orientaions,time_acc,time_ori];
    ecrireJson(donnes);
+   donnes = [];
   })
 
   function ecrireJson(d){
@@ -54,22 +50,20 @@ $(function(){
          url:'./service/save.php',
          type:'post',
          data:{
-           "name":name;
+           "date":startTime,
+           "name":name,
            "keyword":kw,
-           "donnes":d
+           "data":d
          },
          success:function(data){
-           switch(data){
-               var str = kw+", save successful";
-               $("#result").html(str);
-               break;
-           }
+           var str = kw+", save successful";
+           $("#result").html(str);
          },
          error:function(data){
            console.log(data);
-             var str = "Un error produce";
+             var str = "An error produce";
              $("#result").html(str);
          }
-     });
+    });
   }
 })

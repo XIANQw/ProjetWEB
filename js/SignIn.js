@@ -45,7 +45,7 @@ $(function(){
 				},
         error:function(data){
           console.log(data);
-            var str = "un error produit";
+            var str = "an error produit";
             $("#result").html(str);
         }
 			})

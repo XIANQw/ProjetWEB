@@ -1,15 +1,21 @@
-$(function(){
- var accelerations = [];
- var orientaions=[];
+ var accX = [];
+ var accY = [];
+ var accZ = [];
+ var oriG = [];
+ var oriB = [];
+ var oriA = [];
  var time_acc=[];
  var time_ori=[];
  var startTime;
+ var time = 3;
 
  function orientaionsLisener(eventData){
    var g = Math.round(eventData.gamma);
    var b = Math.round(eventData.beta);
    var a = Math.round(eventData.alpha);
-   orientaions.push(Math.round(Math.sqrt(g*g+b*b+a*a)));
+   oriG.push(g);
+   oriB.push(b);
+   oriA.push(a);
    time_ori.push(new Date().getTime()-startTime);
    $("#G").html(g);
    $("#B").html(b);
@@ -19,51 +25,66 @@ $(function(){
  function accelerationLisener(events){
    var acc = events.accelerationIncludingGravity;
    var x = Math.round(acc.x);
-   var y = Math.round(acc.y);
-   var z = Math.round(acc.z);
+   var z = Math.round(acc.y);
+   var y = Math.round(acc.z);
+   accX.push(x);
+   accY.push(y);
+   accZ.push(z);
    $("#X").html(x);
    $("#Y").html(y);
    $("#Z").html(z);
-   accelerations.push(Math.round(Math.sqrt(x*x+y*y+z*z)));
    time_acc.push(new Date().getTime()-startTime);
  }
 
- $("#start").click(function(){
-   startTime = new Date().getTime();
+ function affiche(something){
+   $("#result").html(something);
+ }
+
+ function go(){
+   affiche(3);
+   setTimeout("affiche(2)",1000);
+   setTimeout("affiche(1)",2000);
+   setTimeout("start()",3000);
+ }
+
+ function start(){
+   affiche("Start !!!");
    window.addEventListener("deviceorientation",orientaionsLisener);
    window.addEventListener("devicemotion",accelerationLisener);
- })
+   startTime = new Date().getTime();
+ }
 
-
- $("#stop").click(function(){
+ function stop(){
    window.removeEventListener("deviceorientation",orientaionsLisener);
    window.removeEventListener("devicemotion",accelerationLisener);
-   var donnes = [accelerations,orientaions,time_acc,time_ori];
+   var donnes = [accX,accY,accZ,time_acc,oriA,oriB,oriG,time_ori];
    ecrireJson(donnes);
    donnes = [];
-  })
+ }
 
-  function ecrireJson(d){
-    var kw = $('#keyword').val();
-    var name = $("#nameOfUser").text();
-    $.ajax({
-         url:'./service/save.php',
-         type:'post',
-         data:{
-           "date":startTime,
-           "name":name,
-           "keyword":kw,
-           "data":d
-         },
-         success:function(data){
-           var str = kw+", save successful";
-           $("#result").html(str);
-         },
-         error:function(data){
-           console.log(data);
-             var str = "An error produce";
-             $("#result").html(str);
-         }
-    });
-  }
+ function ecrireJson(d){
+   var kw = $('#keyword').val();
+   var name = $("#nameOfUser").text();
+   $.ajax({
+     url:'./service/save.php',
+     type:'post',
+     data:{
+       "name":name,
+       "keyword":kw,
+       "data":d
+     },
+     success:function(data){
+       var str = kw+", save successful";
+       affiche(str);
+     },
+     error:function(data){
+       console.log(data);
+       affiche("An error produce");
+     }
+   });
+ }
+
+$(function(){
+   $("#start").click(go);
+   $("#stop").click(stop);
 })

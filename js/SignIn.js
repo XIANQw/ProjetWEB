@@ -6,7 +6,7 @@ $(function(){
     $('#login').css('display','none');
     $('#divSignup').css('display','none');
     $('#ModeSignIn').css('display','block');
-    $("#result").html("");
+    affiche("");
   });
 });
 
@@ -30,23 +30,23 @@ $(function(){
 						case 1:
               var str = "";
               $('#tete').css('display','none');
-              $("#result").html(str);
+              affiche(str);
               login(username);
 							break;
 						case 2:
               var str = "password fault！";
-              $("#result").html(str);
+              affiche(str);
 							break;
 						case 3:
               var str = "user not exist！"
-              $("#result").html(str);
+              affiche(str);
               break;
 					}
 				},
         error:function(data){
           console.log(data);
             var str = "an error produit";
-            $("#result").html(str);
+            affiche(str);
         }
 			})
 	  }

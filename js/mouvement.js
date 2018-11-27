@@ -13,9 +13,14 @@ $(function(){
  var stringY = "Y:";
  var stringZ = "Z:";
  var startTime;
+ var timeO =[];
+ var timeM = [];
    $("#start").click(function(){
      startTime = new Date().getTime();
      window.addEventListener("deviceorientation", function(eventData) {
+       var currentTimeO = new Date().getTime();
+       var diffTimeO = currentTimeO - startTime;
+       timeO.push(diffTimeO);
        g = Math.round(eventData.gamma);
        b = Math.round(eventData.beta);
        a = Math.round(eventData.alpha);
@@ -24,6 +29,9 @@ $(function(){
        oriValuesA.push(a);
      });
      window.addEventListener("devicemotion",function(events){
+       var currentTimeM= new Date().getTime();
+       var diffTimeM = currentTimeM - startTime;
+       timeM.push(diffTimeM);
        var acc = events.accelerationIncludingGravity;
        x = Math.round(acc.x);
        y = Math.round(acc.y);
@@ -34,16 +42,12 @@ $(function(){
      });
  })
  $("#stop").click(function(){
-   var currentTime = new Date().getTime();
-   var diff = currentTime - startTime;
-   var donnes = new Map();
-   donnes.set('accX',accX);
-   donnes.set('accY',accY);
-   donnes.set('accZ',accZ);
-   donnes.set('G',oriValuesG);
-   donnes.set('B',oriValuesB);
-   donnes.set('A',oriValuesA);
-   donnes.set('time',diff);
+   var donnes = [accX,accY,accZ];
+ // donnes.set('G',oriValuesG);
+ // donnes.set('B',oriValuesB);
+ // donnes.set('A',oriValuesA);
+ // donnes.set('timeM',timeM);
+ // donnes.set('timeO',timeO);
    ecrireJson(donnes);
   })
 
@@ -54,16 +58,13 @@ $(function(){
          url:'./service/save.php',
          type:'post',
          data:{
-           "name":name;
+           "name":name,
            "keyword":kw,
-           "donnes":d
+           "donnes":d,
          },
          success:function(data){
-           switch(data){
                var str = kw+", save successful";
                $("#result").html(str);
-               break;
-           }
          },
          error:function(data){
            console.log(data);

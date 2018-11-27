@@ -26,6 +26,7 @@ $(function(){
 					"password":password,
 				},
 				success:function(data){
+
 					switch(data){
 						case 1:
               var str = "";
@@ -44,8 +45,8 @@ $(function(){
 					}
 				},
         error:function(data){
-          console.log(data);
-            var str = "un error produit";
+            console.log(data);
+            var str = "une error produit";
             $("#result").html(str);
         }
 			})

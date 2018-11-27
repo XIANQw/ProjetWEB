@@ -3,7 +3,8 @@ header("Content-type: text/html; charset=UTF-8");
 session_start();
 $username = $_POST['username'];
 $password = $_POST['password'];
-$sql = file_get_contents("UserJson.json");
+$sql = file_get_contents('UserJson.json');
+$users =  json_decode($sql,true);
 if($sql==null){
   //echo 3; // user not exist
 }
@@ -21,8 +22,8 @@ if($users!=null){
       else{
         echo 2; // password false
       }
-      $notExist = false;
     }
+    $notExist = false;
   }
 }
 if ($notExist){

@@ -15,17 +15,17 @@
           switch(data){
             case 1:
               var str = username+", create successful";
-              $("#result").html(str);
+              affiche(str);
               break;
             case 2:
-              alert("user exist");
+              affiche("user exist");
               break;
           }
         },
         error:function(data){
           console.log(data);
             var str = "This username exist";
-            $("#result").html(str);
+            affiche(str);
         }
     });
   });
@@ -39,6 +39,6 @@ $(function(){
     $('#signup').css('display','none');
     $('#divSignup').css('display','block');
     $('#ModeSignIn').css('display','none');
-    $("#result").html("");
+    affiche("");
   });
 });

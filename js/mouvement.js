@@ -49,12 +49,17 @@
 
  function start(){
    affiche("Start !!!");
+   $("#start").css('display','none');
+   $("#stop").css('display','block');
+   $("#res").css('display','block');
    window.addEventListener("deviceorientation",orientaionsLisener);
    window.addEventListener("devicemotion",accelerationLisener);
    startTime = new Date().getTime();
  }
 
  function stop(){
+   $("#stop").css('display','none');
+   $("#start").css('display','block');
    window.removeEventListener("deviceorientation",orientaionsLisener);
    window.removeEventListener("devicemotion",accelerationLisener);
    var donnes = [accX,accY,accZ,time_acc,oriA,oriB,oriG,time_ori];

@@ -33,7 +33,8 @@ $(function(){
                 var str = "";
                 $('#tete').css('display','none');
                 affiche(str);
-                login(username);
+                loginMode(username);
+                prepare();
   							break;
   						case 2:
                 var str = "password fault！";
@@ -58,7 +59,7 @@ $(function(){
   });
 
 
-  function login(n){
+  function loginMode(n){
     $('#nameOfUser').html(n);
     $('#divSign').css('display','none');
     $('#divId').css('display','block');

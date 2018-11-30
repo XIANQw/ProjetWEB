@@ -79,6 +79,7 @@
        "data":d
      },
      success:function(data){
+       prepare();
        var str = kw+", save successful";
        affiche(str);
      },

@@ -1,3 +1,9 @@
+$(function(){
+   $("#start").click(go);
+   $("#stop").click(stop);
+   $("#ModeCreatAction").click(ModeCreatAction);
+})
+
  var accX = [];
  var accY = [];
  var accZ = [];
@@ -8,6 +14,7 @@
  var time_ori=[];
  var startTime;
  var time = 3;
+
 
  function orientaionsLisener(eventData){
    var g = Math.round(eventData.gamma);
@@ -64,7 +71,7 @@
    window.removeEventListener("devicemotion",accelerationLisener);
    var donnes = [accX,accY,accZ,time_acc,oriA,oriB,oriG,time_ori];
    ecrireJson(donnes);
-   donnes = [];
+   init();
  }
 
  function ecrireJson(d){
@@ -90,7 +97,18 @@
    });
  }
 
-$(function(){
-   $("#start").click(go);
-   $("#stop").click(stop);
-})
+function init(){
+   accX = [];
+   accY = [];
+   accZ = [];
+   oriG = [];
+   oriB = [];
+   oriA = [];
+   time_acc=[];
+   time_ori=[];
+ }
+
+function ModeCreatAction(){
+  $("#creatAction").css('display','block');
+  $("#searchAction").css('display','none');
+}

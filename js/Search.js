@@ -2,11 +2,18 @@ $(function(){
   $( "#datepicker" ).datepicker();
   $("#nbKw").change(afficherNkeywords);
   $("#button_Search").click(search);
+  $("#ModeSearchAction").click(ModeSearchAction);
 })
 
 var i;
 var actions;
 var nbKw　= 1;
+
+function ModeSearchAction(){
+  $("#creatAction").css('display','none');
+  $("#searchAction").css('display','block');
+}
+
 
 function afficherNkeywords(){
   var i;
@@ -26,8 +33,9 @@ function prepare(){
    dataType: "json",
    success: function(data) {
      $.each(data, function(i, item) {
-          if(item.name == name) actions = item.actions;
+        if(item.name == name) actions = item.actions;
      })
+    console.log(actions);
    }
  })
 }
@@ -60,4 +68,5 @@ function search(){
       })
     })
   }
+  console.log(res);
 }

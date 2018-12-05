@@ -1,18 +1,7 @@
 //change to sigin up
 $(function(){
-  var username;
-  var password;
-
-  $("#ModeSignUp").click(function(){
-    $('#title').html("Sign up");
-    $('#signup').css('display','block');
-    $('#login').css('display','none');
-    $('#divSignup').css('display','none');
-    $('#ModeSignIn').css('display','block');
-    affiche("");
-  });
-
-
+  $("#disconnect").click(disconnect);
+  $("#ModeSignUp").click(ModeSignUp);
 
 // login
   $('#login').click(function(){
@@ -57,20 +46,31 @@ $(function(){
   			affiche("input your username and password");
       }
   });
-
-
-  function loginMode(n){
-    $('#nameOfUser').html(n);
-    $('#divSign').css('display','none');
-    $('#divId').css('display','block');
-  }
-
-
-  $("#disconnect").click(function(){
-      $('#divSign').css('display','block');
-      $('#divId').css('display','none');
-      $('#tete').css('display','block');
-
-      affiche(username + " ,bye ~");
-  });
 });
+var username;
+var password;
+
+function ModeSignUp(){
+  $('#title').html("Sign up");
+  $('#signup').css('display','block');
+  $('#login').css('display','none');
+  $('#divSignup').css('display','none');
+  $('#ModeSignIn').css('display','block');
+  affiche("");
+}
+
+function loginMode(n){
+  $('#nameOfUser').html(n);
+  $('#divSign').css('display','none');
+  $('#divId').css('display','block');
+  $('#res').css('display','none');
+  $('.afterlogin').css('display','block');
+  ModeCreatAction();
+}
+
+function disconnect(){
+  $('#divSign').css('display','block');
+  $('.afterlogin').css('display','none');
+  $('#tete').css('display','block');
+  affiche(username + " ,bye ~");
+}

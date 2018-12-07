@@ -12,6 +12,8 @@ var nbKw　= 1;
 function ModeSearchAction(){
   $("#creatAction").css('display','none');
   $("#searchAction").css('display','block');
+  $("#ModeSearchAction").css('background-color','#dee0e2');
+  $("#ModeCreatAction").css('background-color','white');
 }
 
 

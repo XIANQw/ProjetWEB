@@ -15,7 +15,7 @@ $notExist=true;
 if($users!=null){
   foreach ($users as $user) {
     if($user["username"] == $username){
-      if($user["password"] == $password){
+      if (password_verify($password,$user["password"])){
         echo 1; // login sucess
       }
       else{

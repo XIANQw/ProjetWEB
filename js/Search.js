@@ -8,6 +8,7 @@ $(function(){
 var i;
 var actions;
 var nbKw　= 1;
+var res = [];
 
 function ModeSearchAction(){
   $("#creatAction").css('display','none');
@@ -25,6 +26,30 @@ function afficherNkeywords(){
     var txt = '<input id="kw'+i+'" type="text" name="keyword '+i +'" placeholder="keyword '+i+'"></input>';
     $("#keywords").append($(txt));
   }
+}
+
+function afficherList(list){
+  var i;
+  $("#ResultOfSearch").remove();
+  var txt = '<ul id="ResultOfSearch"></ul>';
+  $("#searchAction").append($(txt));
+  for(i=0;i<list.length;i++){
+    txt = '<li id="res'+i+'">'+list[i]["keyword"] + ' '+list[i]["date"]+'</li>';
+    $('#ResultOfSearch').append($(txt));
+  }
+  listeners();
+}
+
+function listeners(){
+  for(i=0;i<res.length;i++){
+    var id = "#res"+i;
+    $(id).click(choseAction);
+  }
+}
+
+function choseAction(){
+  var i = this.id.slice(3);
+  console.log(res[i]);
 }
 
 function prepare(){
@@ -46,7 +71,7 @@ function search(){
   var info = "";
   var keywords = [];
   var tmp = $("#datepicker").val();
-  var res = []
+  res = [];
   for(i=1;i<=nbKw;i++){
     if($("#kw"+i).val()!="") keywords.push($("#kw"+i).val());
   }
@@ -71,4 +96,5 @@ function search(){
     })
   }
   console.log(res);
+  afficherList(res);
 }

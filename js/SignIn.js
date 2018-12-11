@@ -16,50 +16,6 @@ $(function(){
 
 // login
   $('#login').click(function(){
-<<<<<<< HEAD
-		var username=$('#user-name').val();
-		var password=$("#user-password").val();
-		if(username!=""&&password!=""){
-			$.ajax({
-				type:"POST",
-				url:"./service/login.php",
-				dataType:"JSON",
-				data:{
-					"username":username,
-					"password":password,
-				},
-				success:function(data){
-
-					switch(data){
-						case 1:
-              var str = "";
-              $('#tete').css('display','none');
-              $("#result").html(str);
-              login(username);
-							break;
-						case 2:
-              var str = "password fault！";
-              $("#result").html(str);
-							break;
-						case 3:
-              var str = "user not exist！"
-              $("#result").html(str);
-              break;
-					}
-				},
-        error:function(data){
-            console.log(data);
-            var str = "une error produit";
-            $("#result").html(str);
-        }
-			})
-	  }
-    else{
-			alert("input your username and password");
-    }
-  })
-});
-=======
   		username=$('#user-name').val();
   		password=$("#user-password").val();
   		if(username!=""&&password!=""){
@@ -107,7 +63,6 @@ $(function(){
     $('#divSign').css('display','none');
     $('#divId').css('display','block');
   }
->>>>>>> origin/master
 
 
   $("#disconnect").click(function(){

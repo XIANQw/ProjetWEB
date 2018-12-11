@@ -64,6 +64,7 @@
    window.removeEventListener("devicemotion",accelerationLisener);
    var donnes = [accX,accY,accZ,time_acc,oriA,oriB,oriG,time_ori];
    ecrireJson(donnes);
+   drawData($("#drawData")[0],donnes);
    donnes = [];
  }
 
@@ -88,6 +89,8 @@
      }
    });
  }
+
+ 
 
 $(function(){
    $("#start").click(go);

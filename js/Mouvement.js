@@ -71,6 +71,8 @@ $(function(){
    window.removeEventListener("devicemotion",accelerationLisener);
    var donnes = [accX,accY,accZ,time_acc,oriA,oriB,oriG,time_ori];
    ecrireJson(donnes);
+   InitData($("#drawData")[0],donnes);
+
    init();
  }
 

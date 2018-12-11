@@ -33,4 +33,6 @@ $newJson = json_encode($json_data);
 
 file_put_contents('DATA.json',$newJson);
 
+$sql = json_encode($json_data);
+file_put_contents('DATA.json', $sql);
 ?>

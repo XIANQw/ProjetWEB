@@ -1,7 +1,7 @@
 $(function(){
   $( "#datepicker" ).datepicker();
   $("#nbKw").change(afficherNkeywords);
-  $("#button_Search").click(search);
+  $("#button_Search").click(draw);
   $("#ModeSearchAction").click(ModeSearchAction);
 })
 
@@ -70,5 +70,6 @@ function search(){
       })
     })
   }
+
   console.log(res);
 }

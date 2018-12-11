@@ -1,5 +1,7 @@
 //sign up
  $(function(){
+  $("#ModeSignIn").click(ModeSignIn);
+
   $("#signup").click(function(){
     var username=$('#user-name').val();
 		var password=$("#user-password").val();
@@ -32,13 +34,11 @@
 });
 
 //go to page sign in
-$(function(){
-  $("#ModeSignIn").click(function(){
-    $('#title').html("Sign in");
-    $('#login').css('display','block');
-    $('#signup').css('display','none');
-    $('#divSignup').css('display','block');
-    $('#ModeSignIn').css('display','none');
-    affiche("");
-  });
-});
+function ModeSignIn(){
+  $('#title').html("Sign in");
+  $('#login').css('display','block');
+  $('#signup').css('display','none');
+  $('#divSignup').css('display','block');
+  $('#ModeSignIn').css('display','none');
+  affiche("");
+}

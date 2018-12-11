@@ -1,12 +1,22 @@
-#start,#stop{
-  width: 40%;
-  height: 10%;
+body button{
+  /* width: 40%;
+  height: 10%; */
   position: relative;
   left: 29%;
-  font-size: 180%;
-  text-align: center;
-  margin-top: 10%;
+  font-size: 100%;
+  border-radius: 10%;
 }
-.afterLogin{
-  display: none;
+
+#ModeCreatAction,#ModeSearchAction{
+  position: relative;
+  left: 0%;
+}
+
+body{
+  font-size: 150%;
+}
+
+input{
+  width:80%;
+  height: 8%;
 }

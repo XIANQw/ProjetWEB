@@ -58,15 +58,15 @@ function drawData(Elem,Data){
      x : paddingLeft-30,
      y : HEIGHT - paddingBottom,
    }
+
    for(var i=-2;i<=2;i++){
      context.fillText(i,orientation.x,orientation.y);
      orientation.y += unitey;
    }
    //tracer le chart
    var time_length = Data[7].length;
-
-     var PointX = Data[7][0]/10 + origin.x;
-     var PointY = Data[6][0]/1 + origin.y;
+   var PointX = Data[7][0]/10 + origin.x;
+   var PointY = Data[6][0]/1 + origin.y;
    for (var i = 0; i<time_length; i++){
      var Point2X = (Data[7][i]/10) * unitex + origin.x;
      var Point2Y = (Data[6][i]/1) *unitey + origin.y;

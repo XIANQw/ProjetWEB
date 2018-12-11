@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="js/SignUp.js"></script>
+    <script src="js/SignIn.js"></script>
+    <script src="js/Mouvement.js"></script>
+    <script src="js/Search.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <h2 id="tete">
+      Welcome
+    </h2>
+    <div id="divSign">
+    <fieldset>
+      <legend id="title">Sign in</legend>
+      <form id="my" action="" method="post">
+        <p><input id="user-name" type="text" name="username" placeholder="Username" /></p>
+        <p><input id="user-password" type="password" name="password" placeholder="Password" /></p>
+      </form>
+      <button id="login">login</button>
+      <button id="signup" style="display:none">Sign up </button>
+      <div id="divSignup">
+        <p>Have not yet username? click </p>
+        <button id="ModeSignUp">here</button>
+      </div>
+      <button id="ModeSignIn" style="display:none">Go to login</button>
+    </fieldset>
+    </div>
+
+    <div id="divId" class="afterlogin" style="display:none">
+      <fieldset>
+        <legend >Your ID</legend>
+        <span id="nameOfUser"></span>
+      <button id ="disconnect">disconnect</button>
+      </fieldset>
+    </div>
+    <div id="result"></div>
+    <div class="afterlogin" style="display:none">
+      <nav>
+      <span id="ModeCreatAction">Creat </span>|
+      <span id="ModeSearchAction">Search</span>
+      </nav>
+      <div id="creatAction">
+          <fieldset>
+          <legend>Creat</legend>
+          <div id="res">
+            <div id="X"></div>
+            <div id="Y"></div>
+            <div id="Z"></div>
+            <div id="A"></div>
+            <div id="B"></div>
+            <div id="G"></div>
+          </div>
+          <input id="keyword" type="text" name="keyword" placeholder="Input your keyword"/></p>
+          <button id ="start">start</button>
+          <button id="stop" style="display:none"> stop</button>
+        </fieldset>
+      </div>
+      <div id="searchAction">
+        <div id="Search">
+          <fieldset>
+            <legend >Search</legend>
+            <div id="condition">
+              <span>numbre of keywords </span><select name="nombre_keywords" id="nbKw">
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+              </select>
+              <div id =keywords>
+                <input id="kw1" type="text" name="keyword 1" placeholder="keyword 1"></input>
+              </div>
+              <div id ="date_Search">
+                <input id="datepicker" data-date-format="dd-mm-yyyy" type="text" placeholder="mm-dd-yyyy"></input>
+              </div>
+            </div>
+            <button id="button_Search">Search</button>
+          </fieldset>
+        </div>
+        <div id="drawFiled">
+            <canvas id="drawData" height="400" width="600" style="margin:50px"></canvas>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+</html>

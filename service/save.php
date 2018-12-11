@@ -7,25 +7,31 @@ $datas = $_POST['data'];
 $date = date("d-m-Y H:m:s");
 
 $json_file = file_get_contents("DATA.json");
+$json_data = json_decode($json_file,true);
 
 
- if($json_file==null){
-   $json_data = array();
+$action = Array("keyword" =>$keyword,"date"=>$date,"data"=>$datas);
+$count = 0;
+$pos = -1;
+
+foreach($json_data as $user){
+  if ($user["name"] == $name) $pos = $count;
+   $count = $count + 1;
  }
- else{
-      $json_data = json_decode($json_file,true);
-}
-$json_data[$name][$keyword][$date]["X"] = $datas[0];
-$json_data[$name][$keyword][$date]["Y"] = $datas[1];
-$json_data[$name][$keyword][$date]["Z"] = $datas[2];
-$json_data[$name][$keyword][$date]["time_acc"] = $datas[3];
-$json_data[$name][$keyword][$date]["A"] = $datas[4];
-$json_data[$name][$keyword][$date]["B"] = $datas[5];
-$json_data[$name][$keyword][$date]["G"] = $datas[6];
-$json_data[$name][$keyword][$date]["time_ori"] = $datas[7];
-$newJson = json_encode($json_data);
-file_put_contents('DATA.json',$newJson);
 
+if($pos==-1){
+  $newUser = Array('name' =>$name,'actions'=>[]);
+  $newUser['actions'][] = $action;
+  $json_data[]=$newUser;
+}else{
+  $json_data[$pos]['actions'][]=$action;
+}
+
+
+echo $json_data[0]['actions'][0]['keyword'];
+$newJson = json_encode($json_data);
+
+file_put_contents('DATA.json',$newJson);
 
 $sql = json_encode($json_data);
 file_put_contents('DATA.json', $sql);

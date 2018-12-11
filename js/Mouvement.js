@@ -1,3 +1,9 @@
+$(function(){
+   $("#start").click(go);
+   $("#stop").click(stop);
+   $("#ModeCreatAction").click(ModeCreatAction);
+})
+
  var accX = [];
  var accY = [];
  var accZ = [];
@@ -8,6 +14,7 @@
  var time_ori=[];
  var startTime;
  var time = 3;
+
 
  function orientaionsLisener(eventData){
    var g = Math.round(eventData.gamma);
@@ -65,7 +72,7 @@
    var donnes = [accX,accY,accZ,time_acc,oriA,oriB,oriG,time_ori];
    ecrireJson(donnes);
    drawData($("#drawData")[0],donnes);
-   donnes = [];
+   init();
  }
 
  function ecrireJson(d){
@@ -80,6 +87,7 @@
        "data":d
      },
      success:function(data){
+       prepare();
        var str = kw+", save successful";
        affiche(str);
      },
@@ -90,9 +98,20 @@
    });
  }
 
- 
+function init(){
+   accX = [];
+   accY = [];
+   accZ = [];
+   oriG = [];
+   oriB = [];
+   oriA = [];
+   time_acc=[];
+   time_ori=[];
+ }
 
-$(function(){
-   $("#start").click(go);
-   $("#stop").click(stop);
-})
+function ModeCreatAction(){
+  $("#creatAction").css('display','block');
+  $("#searchAction").css('display','none');
+  $("#ModeSearchAction").css('background-color','white');
+  $("#ModeCreatAction").css('background-color','#dee0e2');
+}

@@ -1,7 +1,7 @@
 $(function(){
   $( "#datepicker" ).datepicker();
   $("#nbKw").change(afficherNkeywords);
-  $("#button_Search").click(draw);
+  $("#button_Search").click(search);
   $("#ModeSearchAction").click(ModeSearchAction);
 })
 
@@ -47,9 +47,11 @@ function listeners(){
   }
 }
 
+
 function choseAction(){
   var i = this.id.slice(3);
-  console.log(res[i]);
+  var data = res[i]["data"];
+  InitData(data);
 }
 
 function prepare(){

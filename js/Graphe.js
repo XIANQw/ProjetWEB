@@ -1,32 +1,58 @@
-function drawData(Elem,Data){
-  var context = Elem.getContext('2d');
-  const WIDTH = Elem.width;
-  const HEIGHT = Elem.height;
-  var padding = 20;
-  var paddingLeft = 60;
-  var paddingBottom = 30;
-
-
-
+var context;
+var elem;
+//Défaut de Chart
+var WIDTH;
+var HEIGHT;
+var padding = 20;
+var paddingLeft = 60;
+var paddingBottom = 30;
 // Cordonnées de l'axe Y
+var axisY;
+// Cordonnées de point d'origine
+var origin;
+// Cordonnées de l'axe X
+var axisX ;
+//Unité de x et y
+var unitex;
+var unitey;
+var time_length;
 
-  var axisY = {
+function InitData(Data){
+  elem = $("#drawData")[0];
+  clearCanvas();
+  drawAxis(Data);
+  for(var i=4;i<7;i++){
+    changeColor(context,i);
+    drawOneData(context,i,7,Data);
+  }
+}
+
+
+
+function clearCanvas(){
+  elem.height=elem.height;
+}
+
+function drawAxis(Data){
+  var l = Data[7].length;
+  context = elem.getContext('2d');
+  WIDTH = elem.width;
+  HEIGHT = elem.height;
+  time_length = Data[7][l-1]/1000 + 1;
+  axisX = {
+      x : WIDTH - padding,
+      y : HEIGHT - paddingBottom
+  };
+  axisY = {
        x : paddingLeft,
        y : padding
    };
-
-
-   var origin = {
+   origin = {
        x : paddingLeft,
        y : HEIGHT - paddingBottom
    };
-
-// Cordonnées de l'axe X
-   var axisX = {
-       x : WIDTH - padding,
-       y : HEIGHT - paddingBottom
-   };
-
+   unitey = Math.abs(axisY.y - origin.y)/2;
+   unitex = Math.abs(axisX.x - origin.x)/time_length;
    // tracer l'axe x,y
    context.lineWidth="1";
    context.strokeStyle="black";
@@ -38,53 +64,52 @@ function drawData(Elem,Data){
 
    drawLine(context,axisX.x-10,axisX.y-5,axisX.x,axisX.y)
    drawLine(context,axisX.x-10,axisX.y+5,axisX.x,axisX.y)
-
    var time = {
    x : paddingLeft,
    y : HEIGHT - paddingBottom
    }
-
    context.textBaseline = "top";
-   //var time_length = Data[7].length;
-   var unitex = abs(axisX.x - origin.x)/4;
-   var unitey = abs(axisY.y - origin.y)/4;
-
-   for(var i=0;i<=4;i++){
+   for(var i=0;i<=time_length;i++){
      context.fillText(i+"sec",time.x,time.y);
      time.x += unitex;
    }
-
    var orientation = {
      x : paddingLeft-30,
      y : HEIGHT - paddingBottom,
    }
 
-   for(var i=-2;i<=2;i++){
-     context.fillText(i,orientation.x,orientation.y);
-     orientation.y += unitey;
-   }
-   //tracer le chart
-   var time_length = Data[7].length;
-   var PointX = Data[7][0]/10 + origin.x;
-   var PointY = Data[6][0]/1 + origin.y;
-   for (var i = 0; i<time_length; i++){
-     var Point2X = (Data[7][i]/10) * unitex + origin.x;
-     var Point2Y = (Data[6][i]/1) *unitey + origin.y;
+   for(var i=-1;i<=1;i++){
+      context.fillText(i,orientation.x,orientation.y);
+      orientation.y -= unitey;
+    }
 
-     if(Point2Y < 0){
-       Point2Y = 0-Point2Y;
-     }
-     else{
-       Point2Y = 2 * unitey + Point2Y;
-     }
+}
 
-     drawLine(context,PointX,PointY,Point2X,Point2Y);
+//tracer le chart
+function drawOneData(context, indice,indiceTime,Data){
+  var time_length = Data[indiceTime].length;
+  var originOri = origin.y -  unitey;
 
-     PointX = Point2X;
-     PointY = Point2Y;
+  var PointX = origin.x + (Data[indiceTime][0]/1000) * unitex;
+  var PointY =  originOri - (Data[indice][0]/180) * unitey;
 
-   }
+  for (var i = 0; i<time_length; i++){
+    var Point2X = origin.x + (Data[indiceTime][i]/1000) * unitex;
+    var Point2Y = originOri - (Data[indice][i]/180) * unitey;
+    drawLine(context,PointX,PointY,Point2X,Point2Y);
+    PointX = Point2X;
+    PointY = Point2Y;
+  }
+}
 
+function changeColor(ctx,i){
+  switch(i){
+    case 4:ctx.strokeStyle = "#37ABEE";
+    break;
+    case 5:ctx.strokeStyle = "#EA7049";
+    break;
+    case 6:ctx.strokeStyle = "#0AFF24";
+  }
 }
 
 function drawLine(ctx,x, y, X, Y){

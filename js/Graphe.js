@@ -110,11 +110,11 @@ function drawAxis(context,Data,acc){
      y : HEIGHT - paddingBottom,
    }
    if(acc){
-     for(var i=-20;i<=20;i+=10){
+     for(var i=-40;i<=40;i+=20){
        context.fillText(i,orientation.x,orientation.y);
        orientation.y -= unitey;
      }
-     unitey = unitey /10;
+     unitey = unitey /20;
   }else{
     for(var i=-2;i<=2;i++){
       context.fillText(i,orientation.x,orientation.y);
@@ -130,7 +130,7 @@ function drawOneData(context, indice,indiceTime,Data){
   var division = 180;
   var originOri = origin.y - 2*unitey;
   if(indiceTime==3){
-    originOri = origin.y - 20 * unitey;
+    originOri = origin.y - 40 * unitey;
     division = 1;
   }
   var PointX = origin.x + (Data[indiceTime][0]/1000) * unitex;

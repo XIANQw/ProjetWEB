@@ -17,7 +17,6 @@ var axisX ;
 //Unité de x et y
 var unitex;
 var unitey;
-var time_length;
 
 function InitData(Data){
   elemOri = $("#drawOrientation")[0];
@@ -25,13 +24,13 @@ function InitData(Data){
   contextAcc = elemAcc.getContext('2d');
   contextOri = elemOri.getContext('2d');
   clearCanvas();
-  drawAxis(contextOri,Data);
-  drawAxis(contextAcc,Data);
+  drawAxis(contextAcc,Data,true);
   for(var i=0;i<3;i++){
     changeColor(contextAcc,i);
     drawSymbol(contextAcc,i,axisY);
-    drawOneData(contextAcc,i,4,Data);
+    drawOneData(contextAcc,i,3,Data);
   }
+  drawAxis(contextOri,Data,false);
   for(var i=4;i<7;i++){
     changeColor(contextOri,i);
     drawSymbol(contextOri,i,axisY);
@@ -66,11 +65,12 @@ function clearCanvas(){
   elemAcc.height = elemAcc.height;
 }
 
-function drawAxis(context,Data){
+function drawAxis(context,Data,acc){
   var l = Data[7].length;
+  // length of axis X must be greater than the max of time
+  var time_length = Data[7][l-1]/1000 + 1;
   WIDTH = elemAcc.width;
   HEIGHT = elemAcc.height;
-  time_length = Data[7][l-1]/1000 + 1;
   axisX = {
       x : WIDTH - padding,
       y : HEIGHT - paddingBottom
@@ -109,25 +109,35 @@ function drawAxis(context,Data){
      x : paddingLeft-30,
      y : HEIGHT - paddingBottom,
    }
-
-   for(var i=-2;i<=2;i++){
+   if(acc){
+     for(var i=-20;i<=20;i+=10){
+       context.fillText(i,orientation.x,orientation.y);
+       orientation.y -= unitey;
+     }
+     unitey = unitey /10;
+  }else{
+    for(var i=-2;i<=2;i++){
       context.fillText(i,orientation.x,orientation.y);
       orientation.y -= unitey;
     }
+  }
 
 }
 
 //tracer le chart
 function drawOneData(context, indice,indiceTime,Data){
   var time_length = Data[indiceTime].length;
-  var originOri = origin.y -  unitey;
-
+  var division = 180;
+  var originOri = origin.y - 2*unitey;
+  if(indiceTime==3){
+    originOri = origin.y - 20 * unitey;
+    division = 1;
+  }
   var PointX = origin.x + (Data[indiceTime][0]/1000) * unitex;
-  var PointY =  originOri - (Data[indice][0]/180) * unitey;
-
+  var PointY =  originOri - (Data[indice][0]/division) * unitey;
   for (var i = 0; i<time_length; i++){
     var Point2X = origin.x + (Data[indiceTime][i]/1000) * unitex;
-    var Point2Y = originOri - (Data[indice][i]/180) * unitey;
+    var Point2Y = originOri - (Data[indice][i]/division) * unitey;
     drawLine(context,PointX,PointY,Point2X,Point2Y);
     PointX = Point2X;
     PointY = Point2Y;

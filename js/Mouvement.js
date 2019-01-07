@@ -76,15 +76,17 @@ $(function(){
  }
 
  function ecrireJson(d){
+   var datas = JSON.stringify(d);
    var kw = $('#keyword').val();
    var name = $("#nameOfUser").text();
    $.ajax({
      url:'./service/save.php',
      type:'post',
+     datetype : "JSON",
      data:{
        "name":name,
        "keyword":kw,
-       "data":d
+       "data":datas
      },
      success:function(data){
        prepare();

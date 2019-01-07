@@ -3,7 +3,8 @@ header("Content-type:text/html;charset=utf-8");
 
 $name = $_POST['name'];
 $keyword = $_POST['keyword'];
-$datas = $_POST['data'];
+$d= $_POST['data'];
+$datas = json_decode($d,true);
 $date = date("d-m-Y H:m:s");
 
 $json_file = file_get_contents("DATA.json");
@@ -28,7 +29,7 @@ if($pos==-1){
 }
 
 
-echo $json_data[0]['actions'][0]['keyword'];
+echo 1;
 $newJson = json_encode($json_data);
 
 file_put_contents('DATA.json',$newJson);

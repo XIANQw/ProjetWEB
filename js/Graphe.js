@@ -1,5 +1,7 @@
-var context;
-var elem;
+var elemOri;
+var contextOri;
+var elemAcc;
+var contextAcc;
 //Défaut de Chart
 var WIDTH;
 var HEIGHT;
@@ -18,26 +20,56 @@ var unitey;
 var time_length;
 
 function InitData(Data){
-  elem = $("#drawData")[0];
+  elemOri = $("#drawOrientation")[0];
+  elemAcc = $("#drawAcceleration")[0];
+  contextAcc = elemAcc.getContext('2d');
+  contextOri = elemOri.getContext('2d');
   clearCanvas();
-  drawAxis(Data);
+  drawAxis(contextOri,Data);
+  drawAxis(contextAcc,Data);
+  for(var i=0;i<3;i++){
+    changeColor(contextAcc,i);
+    drawSymbol(contextAcc,i,axisY);
+    drawOneData(contextAcc,i,4,Data);
+  }
   for(var i=4;i<7;i++){
-    changeColor(context,i);
-    drawOneData(context,i,7,Data);
+    changeColor(contextOri,i);
+    drawSymbol(contextOri,i,axisY);
+    drawOneData(contextOri,i,7,Data);
+  }
+}
+
+function drawSymbol(context,i,axisY){
+  var j = i;
+  if (i > 3)  j = i-4;
+  var start = 10+axisY.x+j*50;
+  var end = axisY.x+(j+1)*50;
+  drawLine(context,start,0,end,0);
+  switch(i){
+    case 0:context.fillText("X",start,5);
+    break;
+    case 1:context.fillText("Y",start,5);
+    break;
+    case 2:context.fillText("Z",start,5);
+    break;
+    case 4:context.fillText("Alpha",start,5);
+    break;
+    case 5:context.fillText("Beta",start,5);
+    break;
+    case 6:context.fillText("Gamma",start,5);
   }
 }
 
 
-
 function clearCanvas(){
-  elem.height=elem.height;
+  elemOri.height = elemOri.height;
+  elemAcc.height = elemAcc.height;
 }
 
-function drawAxis(Data){
+function drawAxis(context,Data){
   var l = Data[7].length;
-  context = elem.getContext('2d');
-  WIDTH = elem.width;
-  HEIGHT = elem.height;
+  WIDTH = elemAcc.width;
+  HEIGHT = elemAcc.height;
   time_length = Data[7][l-1]/1000 + 1;
   axisX = {
       x : WIDTH - padding,
@@ -51,7 +83,7 @@ function drawAxis(Data){
        x : paddingLeft,
        y : HEIGHT - paddingBottom
    };
-   unitey = Math.abs(axisY.y - origin.y)/2;
+   unitey = Math.abs(axisY.y - origin.y)/4;
    unitex = Math.abs(axisX.x - origin.x)/time_length;
    // tracer l'axe x,y
    context.lineWidth="1";
@@ -78,7 +110,7 @@ function drawAxis(Data){
      y : HEIGHT - paddingBottom,
    }
 
-   for(var i=-1;i<=1;i++){
+   for(var i=-2;i<=2;i++){
       context.fillText(i,orientation.x,orientation.y);
       orientation.y -= unitey;
     }
@@ -103,12 +135,14 @@ function drawOneData(context, indice,indiceTime,Data){
 }
 
 function changeColor(ctx,i){
-  switch(i){
-    case 4:ctx.strokeStyle = "#37ABEE";
+  var j = i;
+  if (i>3) j = i-4;
+  switch(j){
+    case 0:ctx.strokeStyle = "#37ABEE";
     break;
-    case 5:ctx.strokeStyle = "#EA7049";
+    case 1:ctx.strokeStyle = "#EA7049";
     break;
-    case 6:ctx.strokeStyle = "#0AFF24";
+    case 2:ctx.strokeStyle = "#0AFF24";
   }
 }
 
